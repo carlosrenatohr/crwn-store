@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import FormInput from '../form-input/form-input.component';
 import ButtonControl from '../button-control/button-control.component';
+
+import { UserContext } from '../../contexts/user.context';
 
 import { createAuthUserWithEmailPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 import './sign-up.styles.scss';
@@ -13,13 +15,14 @@ const defaultFormFields = {
 
 const SignUp = () => {
 
-    const [ formFields, setFormFields ] = useState( defaultFormFields );
+    const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
+    const { currentUser, setCurrentUser } = useContext(UserContext);
     console.log(formFields);
 
     const handleChange = (ev) => {
         const { name, value } = ev.target;
-        setFormFields( { ...formFields, [name]: value} ); // TODO check on this
+        setFormFields({ ...formFields, [name]: value }); // TODO check on this
     };
 
     const resetFormFields = (ev) => {
@@ -28,17 +31,18 @@ const SignUp = () => {
 
     const handleSubmit = async (ev) => {
         ev.preventDefault();
-        if (!email && !password){
-            alert( 'Please enter your email and password.');
+        if (!email && !password) {
+            alert('Please enter your email and password.');
             return;
         }
         if (password != confirmPassword) {
-            alert( 'Please enter your password again.');
+            alert('Please enter your password again.');
             return;
         }
         try {
             const { user } = await createAuthUserWithEmailPassword(email, password);
             if (user) {
+                setCurrentUser(user);
                 console.log('User created', user);
                 const newCreatedUser = await createUserDocumentFromAuth(user, { displayName })
                 resetFormFields();
@@ -52,9 +56,9 @@ const SignUp = () => {
             } else if (error.code === 'auth/weak-password') {
                 alert('Cannot create user, email already in use');
                 return;
-            } else {}
+            } else { }
         }
-        
+
     };
 
     return (
@@ -63,32 +67,32 @@ const SignUp = () => {
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="">Name</label>
-                <FormInput label='Display Name' type='text' name='displayName' value={displayName} required onChange={handleChange}/>
+                <FormInput label='Display Name' type='text' name='displayName' value={displayName} required onChange={handleChange} />
 
                 <FormInput
-                label='Email'
-                type='email'
-                required
-                onChange={handleChange}
-                name='email'
-                value={email}
+                    label='Email'
+                    type='email'
+                    required
+                    onChange={handleChange}
+                    name='email'
+                    value={email}
                 />
 
                 <FormInput label='Password'
-                type='password'
-                required
-                onChange={handleChange}
-                name='password'
-                value={password}
+                    type='password'
+                    required
+                    onChange={handleChange}
+                    name='password'
+                    value={password}
                 />
-                
+
                 <FormInput
-                label='Confirm Password'
-                type='password'
-                required
-                onChange={handleChange}
-                name='confirmPassword'
-                value={confirmPassword}
+                    label='Confirm Password'
+                    type='password'
+                    required
+                    onChange={handleChange}
+                    name='confirmPassword'
+                    value={confirmPassword}
                 />
                 <ButtonControl type='submit'>Sign Up</ButtonControl>
             </form>

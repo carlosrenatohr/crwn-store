@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import FormInput from '../form-input/form-input.component';
 import ButtonControl from '../button-control/button-control.component';
+
+import { UserContext } from '../../contexts/user.context';
 
 import { getRedirectResult } from 'firebase/auth';
 import { auth, signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
@@ -16,6 +18,7 @@ const defaultFormFields = {
 const SignIn = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+    const { currentUser, setCurrentUser} = useContext(UserContext)
     
     // useEffect( () => async () => { 
     //     const response = await getRedirectResult(auth);
@@ -31,6 +34,7 @@ const SignIn = () => {
 
     const signInWithGoogle = async () => {
         const { user } = await signInWithGooglePopup();
+        setCurrentUser(user);
         await createUserDocumentFromAuth(user);
     };
 
@@ -38,8 +42,9 @@ const SignIn = () => {
         event.preventDefault();
     
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email,password);
-            console.log(response);
+            const { user } = await signInAuthUserWithEmailAndPassword(email,password);
+            setCurrentUser(user);
+
             resetFormFields();
         } catch (error) {
             switch (error.code) {
