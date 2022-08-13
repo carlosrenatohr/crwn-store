@@ -18,24 +18,15 @@ const defaultFormFields = {
 const SignIn = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
-    const { currentUser, setCurrentUser} = useContext(UserContext)
-    
-    // useEffect( () => async () => { 
-    //     const response = await getRedirectResult(auth);
-    //     console.log(response);
-    //     if (response) {
-    //         const userDocRef = await createUserDocumentFromAuth(response.user);                
-    //     }
-    // }, []);
+    // const { currentUser, setCurrentUser} = useContext(UserContext)
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     };
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        setCurrentUser(user);
-        await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
+        // setCurrentUser(user);
     };
 
     const handleSubmit = async (event) => {
@@ -43,7 +34,7 @@ const SignIn = () => {
     
         try {
             const { user } = await signInAuthUserWithEmailAndPassword(email,password);
-            setCurrentUser(user);
+            // setCurrentUser(user);
 
             resetFormFields();
         } catch (error) {

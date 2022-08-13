@@ -17,7 +17,7 @@ const SignUp = () => {
 
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+    // const { currentUser, setCurrentUser } = useContext(UserContext);
     console.log(formFields);
 
     const handleChange = (ev) => {
@@ -42,9 +42,9 @@ const SignUp = () => {
         try {
             const { user } = await createAuthUserWithEmailPassword(email, password);
             if (user) {
-                setCurrentUser(user);
+                // setCurrentUser(user);
                 console.log('User created', user);
-                const newCreatedUser = await createUserDocumentFromAuth(user, { displayName })
+                await createUserDocumentFromAuth(user, { displayName })
                 resetFormFields();
             }
         } catch (error) {
