@@ -1,8 +1,8 @@
 import { useState, createContext } from 'react';
-import PRODUCTS from '../shop-data.json';
+import PRODUCTS from '../shop-data.js';
 
 export const ProductContext = createContext({
-    products: [],
+    products: {},
 });
 
 export const ProductProvider = ({children}) => {
