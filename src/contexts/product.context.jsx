@@ -2,12 +2,12 @@ import { useState, createContext } from 'react';
 import PRODUCTS from '../shop-data.js';
 
 export const ProductContext = createContext({
-    products: {},
+    categories: {},
 });
 
 export const ProductProvider = ({children}) => {
-    const [ products, setProducts ] = useState(PRODUCTS);
-    const value = {products};
+    const [ categories, setCategories ] = useState(PRODUCTS);
+    const value = {categories};
     
     return (
         <ProductContext.Provider value={value} >{children}</ProductContext.Provider>
