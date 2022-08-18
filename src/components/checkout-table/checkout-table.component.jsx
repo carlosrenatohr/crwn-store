@@ -8,24 +8,28 @@ const CheckoutTable = () => {
     const { cartItems, cartTotal } = useContext(CartContext);
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Remove</th>
-                </tr>
+        <table className="checkout-container">
+            <thead className="checkout-header">
+                {/* <tr> */}
+                    <th className="header-block">Product</th>
+                    <th className="header-block">Description</th>
+                    <th className="header-block">Quantity</th>
+                    <th className="header-block">Price</th>
+                    <th className="header-block">Remove</th>
+                {/* </tr> */}
             </thead>
             <tbody>
                 {cartItems.map((item) => <CheckoutRow item={item} key={item.id} />)}
             </tbody>
             <tfoot>
                 <tr>
-                    <td>TOTAL: <span>{`$ ${cartTotal}`}</span></td>
-                </tr>
-            </tfoot>
+                    <td className="total">
+            <span className="total">
+                TOTAL: {`$ ${cartTotal}`}
+            </span>
+                    </td>
+                 </tr>
+             </tfoot>
         </table>
     );
 }
