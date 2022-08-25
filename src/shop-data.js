@@ -237,7 +237,7 @@ const PRODUCTS_JSON = [
 ];
 
 const PRODUCTS = PRODUCTS_JSON.reduce((array, line) => {
-  array[line.title] = line.items;
+  array[line.title.toLocaleLowerCase()] = line.items;
   return array;
 }, {});
 

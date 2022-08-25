@@ -1,12 +1,15 @@
+import { Link } from 'react-router-dom';
 import ProductCard from "../product-card/product-card.component";
-import "./category-preview.styles.scss";
+import "./categories-preview.styles.scss";
 
-const CategoryPreview = ({title, items}) => {
+const CategoriesPreview = ({title, items}) => {
 
     return (
         <div className="category-preview-container">
             <h2 >
-                <span className="title">{title}</span>
+                <Link className="title" to={title}>
+                    {title.toUpperCase()}
+                </Link>
             </h2>
             <div className="preview">
                 {
@@ -17,4 +20,4 @@ const CategoryPreview = ({title, items}) => {
     )
 }
 
-export default CategoryPreview;
+export default CategoriesPreview;
