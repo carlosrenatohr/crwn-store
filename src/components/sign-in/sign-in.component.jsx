@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 
 import FormInput from '../form-input/form-input.component';
-import ButtonControl from '../button-control/button-control.component';
+import ButtonControl, {BUTTON_TYPE_CLASSES} from '../button-control/button-control.component';
 
 import { UserContext } from '../../contexts/user.context';
 
@@ -83,8 +83,8 @@ const SignIn = () => {
                 value={password}
                 />
                 <div className='buttons-container'>
-                <ButtonControl type='submit'>Sign In</ButtonControl>
-                <ButtonControl type='button' buttonType='google' onClick={signInWithGoogle}>
+                <ButtonControl type='button' buttonType={BUTTON_TYPE_CLASSES.base}>Sign In</ButtonControl>
+                <ButtonControl type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>
                     Google sign in
                 </ButtonControl>
                 </div>
